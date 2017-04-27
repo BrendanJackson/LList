@@ -5,6 +5,8 @@ const int NULL = 0;
 typedef int element;
 const element SENTINEL = -1;
 element read_element();
+//constant string
+const string ELEMENT_NAME = "whole number";
 
 class listnode{
 	public:
@@ -52,6 +54,54 @@ int main (){
 	cout << "object printed" << endl;
 	}
 
+//Data and range checks data, returns a sanatized value to be used later
+element read_element() {
+    // PRE:  the user must enter a series of zero or
+    // more non-valid element values, followed by a valid element value
+    // POST: all entered non-valid element values will 
+    //be successfully discarded, and the first valid element
+    //  value entered will be returned
+    element userval;        // used to collect the user's input value
+                            
+    // attempt to get an input value whose data type is an element
+    
+    // the boolalpha manipulator is used in case elements are bools,
+    // to allow for inputs using the keystroke sequences of
+    // "true" and "false" instead of "1" and "0"
+    cin >> boolalpha >> userval;
+
+    // repeat the following as long as this attempt failed,
+    // presumably because the data type of the user's input was not an element
+    while (! cin.good() || userval < -2147483647 || userval > 2147483647) {
+
+      // re-enable the just-disabled cin object
+      cin.clear();
+
+      // from the input buffer, discard up to 80 
+      //keystrokes or until the enter key is seen, whichever comes first
+      cin.ignore(80, '\n');
+
+      // tell the user what happened, and to try again
+     if(!cin.good()){
+        cout << "Invalid data type, should be an element ("
+              << ELEMENT_NAME
+              << "), try again: ";
+        } else
+        cout << "Invalid range type, should be within -2147483647" 
+             << " and 2147483647, try again: ";
+
+      // attempt to get an input value whose data type is an element
+      //
+      // the boolalpha manipulator is used in case elements are bools,
+      // to allow for inputs using the keystroke
+      // sequences of "true" and "false" instead of "1" and "0"
+      cin >> boolalpha >> userval;
+      }
+
+    // return the valid element value given by the user
+    return userval;
+  }
+
 LList::LList(){
 	//PRE: none
 	//POST: hte N.O. LList is valid and empty
@@ -61,13 +111,15 @@ LList::LList(){
 
 LList::~LList(){
 	//PRE: the N.O. LList is valid
-	//POST: the N.O. LList is valid and empty, its listnodes have been deleted
+	//POST: the N.O. LList is valid and empty, 
+	// its listnodes have been deleted
 	Clean();
 	}
 
 void LList::Print(){
 	//Pre: the N.O. LList is valid
-	//Post: the N.O. LList is unchangend , and its elements have been displayed
+	//Post: the N.O. LList is unchangend , 
+	// and its elements have been displayed
 	listnode * temp;
 
 	temp = head;
@@ -80,7 +132,8 @@ void LList::Print(){
 void LList::InsertHead(element thing){
 	// PRE: the N.O. LList is valid
 	// POST:: the N.O. LList is cunchanged, except that a new 
-	//listnode containing element thing has been inserted at the head end of the list
+	//listnode containing element thing has been 
+	// inserted at the head end of the list
 
 	listnode * temp;
 
@@ -97,7 +150,8 @@ void LList::InsertHead(element thing){
 void LList::InsertTail(element thing){
 	//PRE: the N.O. LList is valid
 	// POST: the N.O. LList is unchanged, except that a new listnode 
-	// containing element thing has been inserted at the tail end of the list
+	// containing element thing has been 
+	// inserted at the tail end of the list
 	listnode * temp;
 
 	temp = new listnode;
@@ -195,7 +249,8 @@ void LList::Duplicate(LList & Source){
 
 void LList::Reverse(){
 	//PRE: the N.O. LList is valid
-	//POST: the N.O. LList is unchanged, except its elements are in reverse order
+	//POST: the N.O. LList is unchanged, 
+	// except its elements are in reverse order
 
 	listnode * temp;
 	LList Helper;
